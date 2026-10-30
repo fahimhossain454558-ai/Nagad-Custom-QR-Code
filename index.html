@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>দোকানের তথ্য ইনপুট</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 min-h-screen py-10 px-4 flex items-center justify-center">
+
+    <div class="max-w-xl w-full bg-white/95 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-slate-800">নগদ উদ্যোক্তার তথ্য দিন</h1>
+            <p class="text-sm text-slate-500 mt-1">সঠিক তথ্য দিয়ে কিউআর তৈরি করুন</p>
+        </div>
+
+        <form id="storeForm" class="space-y-5">
+            <!-- ১. নাম -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">১. নাম</label>
+                <input type="text" id="ownerName" 
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition-all text-sm font-medium text-slate-700">
+            </div>
+
+            <!-- ২. দোকানের নাম -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">২. দোকানের নাম</label>
+                <input type="text" id="storeName" 
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition-all text-sm font-medium text-slate-700">
+            </div>
+
+            <!-- ৩. ঠিকানা -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">৩. ঠিকানা</label>
+                <textarea id="storeAddress" rows="2" 
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition-all text-sm font-medium text-slate-700 resize-none"></textarea>
+            </div>
+
+            <!-- ৪. আইডি -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">৪. আইডি</label>
+                <input type="text" id="storeId" 
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition-all text-sm font-medium text-slate-700">
+            </div>
+
+            <!-- ৫. নগদ উদ্যোক্তা একাউন্ট নাম্বার (বাধ্যতামূলক) -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">৫. নগদ উদ্যোক্তা একাউন্ট নাম্বার (QR এর জন্য) *</label>
+                <input type="text" id="cashoutNumber" required
+    maxlength="11"
+    inputmode="numeric"
+    pattern="[0-9]{11}"
+    title="সঠিক ১১ ডিজিটের নাম্বার লিখুন"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)"
+    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all text-sm font-medium text-slate-700">
+            </div>
+
+            <!-- ৬. লাক্সারি ও আকর্ষণীয় প্রোফাইল পিকচার আপলোড বক্স -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">৬. প্রোফাইল পিকচার আপলোড করুন</label>
+                <label for="profileImage" class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-indigo-300 rounded-2xl cursor-pointer bg-gradient-to-br from-indigo-50/60 via-purple-50/30 to-pink-50/40 hover:border-indigo-500 hover:shadow-lg transition-all duration-300 group overflow-hidden">
+                    
+                    <!-- প্রিভিউ ইমেজ কন্টেইনার -->
+                    <div id="previewContainer" class="absolute inset-0 flex items-center justify-center bg-white/95 backdrop-blur-md hidden z-10">
+                        <div class="relative">
+                            <img id="imagePreview" src="" alt="Preview" class="w-24 h-24 rounded-full object-cover border-4 border-indigo-600 shadow-xl">
+                            <span class="absolute bottom-0 right-0 bg-emerald-500 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-md border-2 border-white">
+                                <i class="fa-solid fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- আপলোড গাইডলাইন ও আইকন -->
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4 group-hover:scale-105 transition-transform duration-300">
+                        <div class="w-14 h-14 mb-3 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-700"><span class="text-indigo-600 underline decoration-indigo-300 underline-offset-2">ছবি আপলোড করতে ক্লিক করুন</span></p>
+                        <p class="text-[10px] text-slate-400 mt-1 font-medium">হাই-কোয়ালিটি PNG, JPG অথবা WEBP ফাইল</p>
+                    </div>
+
+                    <input type="file" id="profileImage" accept="image/*" class="hidden" />
+                </label>
+            </div>
+
+            <div class="pt-4 flex gap-4">
+                <!-- সকল তথ্য মুছে ফেলুন বাটন -->
+                <button type="button" id="clearBtn" 
+                    class="w-1/3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold py-3.5 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm text-sm border border-rose-200">
+                    <i class="fa-solid fa-trash-can"></i> সকল তথ্য মুছে ফেলুন
+                </button>
+
+                <!-- সাবমিট বাটন -->
+                <button type="submit" 
+                    class="w-2/3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-3.5 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 text-sm">
+                    <span>উদ্যোক্তা কিউআর দেখুন</span>
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const storeForm = document.getElementById('storeForm');
+        const clearBtn = document.getElementById('clearBtn');
+        const profileImageInput = document.getElementById('profileImage');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewContainer = document.getElementById('previewContainer');
+
+        let uploadedBase64Img = '';
+
+        // পেজ লোড হওয়ার সাথে সাথে লোকালস্টোরেজ থেকে ডেটা এবং ছবি রিস্টোর করা
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = JSON.parse(localStorage.getItem('storeData'));
+            if (savedData) {
+                document.getElementById('ownerName').value = savedData.ownerName || '';
+                document.getElementById('storeName').value = savedData.name || '';
+                document.getElementById('storeAddress').value = savedData.address || '';
+                document.getElementById('storeId').value = savedData.id || '';
+                document.getElementById('cashoutNumber').value = savedData.cashout || '';
+
+                if (savedData.profileImg) {
+                    uploadedBase64Img = savedData.profileImg;
+                    imagePreview.src = savedData.profileImg;
+                    previewContainer.classList.remove('hidden');
+                }
+            }
+        });
+
+        // ছবি সিলেক্ট করলে লাইভ প্রিভিউ দেখানোর লজিক
+        profileImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    uploadedBase64Img = event.target.result;
+                    imagePreview.src = uploadedBase64Img;
+                    previewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ফর্ম সাবমিট করলে লোকালস্টোরেজে ডেটা সেভ হওয়া
+        storeForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const storeData = {
+                ownerName: document.getElementById('ownerName').value,
+                name: document.getElementById('storeName').value,
+                address: document.getElementById('storeAddress').value,
+                id: document.getElementById('storeId').value,
+                cashout: document.getElementById('cashoutNumber').value,
+                profileImg: uploadedBase64Img
+            };
+
+            localStorage.setItem('storeData', JSON.stringify(storeData));
+            window.location.href = 'output.html';
+        });
+
+        // সকল তথ্য মুছে ফেলুন (Clear/Reset) বাটন ফাংশনালিটি
+        clearBtn.addEventListener('click', function() {
+            if (confirm('আপনি কি সব তথ্য মুছে ফেলতে চান?')) {
+                localStorage.removeItem('storeData');
+                storeForm.reset();
+                uploadedBase64Img = '';
+                previewContainer.classList.add('hidden');
+                imagePreview.src = '';
+            }
+        });
+    </script>
+</body>
+</html>
