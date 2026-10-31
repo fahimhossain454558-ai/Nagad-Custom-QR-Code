@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নগদ উদ্যোক্তা কার্ড - output.html</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* প্রিন্ট করার সময় ব্যাকগ্রাউন্ড ও কালার ঠিক রাখার জন্য */
+       @media print {
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .preview-card {
+                /* প্রিন্টে শ্যাডো ফুটিয়ে তোলার জন্য আউটলাইন/বক্স-শ্যাডো ফোর্স করা হয়েছে */
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; }
+
+        /* মূল কার্ডের মাপ ও শ্যাডো */
+        .preview-card {
+            width: 382px;
+            height: 620px;
+            position: relative;
+            background-color: #ffffff;
+            overflow: hidden;
+            /* এখানে কোনো বর্ডার নেই, শুধু চারপাশে সুন্দর শ্যাডো দেওয়া হয়েছে */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 15px rgba(120, 0, 0, 0.15);
+            border-radius: 16px;
+        }
+       
+        /* প্রতিটি কন্ট্রোল বক্স স্বাধীনভাবে সাজানোর জন্য */
+        .control-box {
+            position: absolute;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="bg-gray-200 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- মূল কার্ড -->
+    <div class="preview-card border border-gray-300">
+
+        <!-- ১. টপ লোগো সেকশন (Top Logo Section) -->
+        <div id="topLogoSection" 
+             class="control-box flex items-center justify-center bg-transparent z-40" 
+             style="right: 16px; top: 12px; width: 150px; height: 48px;" 
+             data-name="নগদ লোগো">
+            <img src="nagad-logo.png" alt="Nagad Logo" class="h-full object-contain">
+        </div>
+
+        <!-- ২. লম্বা মেরুন ব্যাকগ্রাউন্ড (Maroon Banner BG) -->
+        <div id="maroonBanner" 
+             class="control-box bg-[#780000] rounded-[28px] shadow-md z-10" 
+             style="left: 0px; top: 68px; width: 380px; height: 250px; transform-origin: center; transform: scale(1.01);"
+             data-name="মেরুন ব্যাকগ্রাউন্ড">
+        </div>
+
+        <!-- ৩. মেরুন ব্যানার টেক্সট (Maroon Banner Text) -->
+        <div id="maroonBannerText" 
+             class="control-box z-20 flex flex-col items-center justify-center text-center" 
+             style="left: 16px; top: 78px; width: 348px; height: 60px;" 
+             data-name="মেরুন ব্যানার টেক্সট">
+            <h2 class="text-white text-2xl font-bold tracking-wide">নগদ উদ্যোক্তা</h2>
+            <p class="text-white/90 text- font-medium mt-0.5">ক্যাশ আউট করতে QR কোডটি স্ক্যান করুন</p>
+        </div>
+
+        <!-- ৪. কিউআর বর্ডার এবং অটো কিউআর কোড জেনারেটর -->
+        <div id="qrBorderElement" 
+             class="control-box bg-white border-8 border-[#780000] rounded-2xl shadow-md z-30 flex items-center justify-center overflow-hidden" 
+             style="left: 98px; top: 142px; width: 184px; height: 184px;" 
+             data-name="কিউআর বর্ডার">
+            <img id="qrCodeImg" 
+                 src="" 
+                 alt="QR Code" 
+                 class="w-full h-full object-contain p-2 pointer-events-none select-none">
+        </div>
+
+        <!-- ৫. ধূসর কন্টেন্ট এরিয়া (Gray Content Area) -->
+        <div id="grayContentArea" 
+             class="control-box bg-[#e5e7eb] rounded-[28px] z-10" 
+             style="left: 0px; top: 285px; width: 380px; height: 330px; transform-origin: center; transform: scale(1.02);""
+             data-name="ধূসর কন্টেন্ট এরিয়া">
+        </div>
+
+        <!-- ৭. একাউন্ট নাম্বার টাইটেল (Account Number Title) -->
+        <div id="independentTitleWrapper" 
+             class="control-box z-30 flex items-center justify-center text-center" 
+             style="left: 0px; top: 332px; width: 382px; height: 30px;" 
+             data-name="একাউন্ট নাম্বার টাইটেল">
+            <span class="text-x font-bold text-slate-800 tracking-wider uppercase">নগদ উদ্যোক্তা একাউন্ট নাম্বার</span>
+        </div>
+
+        <!-- ৮. একাউন্ট নাম্বার বক্স (Account Number Box) -->
+        <div id="independentBoxesWrapper" 
+             class="control-box z-30 flex items-center justify-center px-2" 
+             style="left: 0px; top: 360px; width: 380px; height: 45px;transform-origin: center; transform: scale(1.08);" 
+             data-name="একাউন্ট নাম্বার বক্স">
+            <div id="cashoutDigitsContainer" class="flex items-center justify-center gap-1 w-full"></div>
+        </div>
+
+        <!-- ৯. উদ্যোক্তার তথ্যাবলি হেডার (Section Header) -->
+        <div id="independentSectionHeaderWrapper" 
+             class="control-box z-30 flex items-center justify-center px-6 border-b border-slate-300" 
+             style="left: 0px; top: 415px; width: 382px; height: 30px;" 
+             data-name="উদ্যোক্তার তথ্যাবলি হেডার">
+            <span class="text-xs font-bold text-[#780000] uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-store text-xs"></i> উদ্যোক্তার তথ্যাবলি
+            </span>
+        </div>
+
+        <!-- ১০. তথ্য ও প্রোফাইল ছবি গ্রিড (Details & Profile Grid) -->
+        <div id="independentDetailsGridWrapper" 
+             class="control-box z-30 flex items-center justify-between px-2" 
+             style="left: 15px; top: 450px; width: 350px; height: 95px;" 
+             data-name="তথ্য ও প্রোফাইল ছবি গ্রিড">
+            <!-- বাম দিকের তথ্য (৮ কলাম সমান) -->
+            <div class="flex flex-col justify-center space-y-0.5 text-xs text-slate-800 w-[68%]" id="storeDetailsText">
+    <p class="font-bold text-slate-900 flex text-[11px]"><span class="w-[50px] inline-block text-slate-950 font-medium">নাম :</span> <span id="displayOwnerName">-</span></p>
+    <p class="font-bold text-slate-900 flex text-[11px]"><span class="w-[50px] inline-block text-slate-950 font-medium">দোকান :</span> <span id="displayStoreName">-</span></p>
+    <p class="font-bold text-slate-900 flex whitespace-normal break-words text-[11px]"><span class="w-[50px] inline-block text-slate-950 font-medium shrink-0">ঠিকানা :</span> <span id="displayStoreAddress">-</span></p>
+    <p class="font-bold text-slate-900 flex text-[11px]"><span class="w-[50px] inline-block text-slate-950 font-medium">আইডি :</span> <span id="displayStoreId">-</span></p>
+</div>
+            <!-- ডান দিকের প্রোফাইল ছবি (৪ কলাম সমান) -->
+            <div id="profileContainer" class="w-[30%] flex items-center justify-center hidden">
+    <div class="w-16 h-20 rounded-xl border-2 border-[#780000] overflow-hidden bg-white shadow-sm flex items-center justify-center">
+        <img id="displayProfileImg" src="" alt="Profile" class="w-full h-full object-cover">
+    </div>
+</div>
+        </div>
+
+        <!-- ১১. ফুটার সেকশন (Card Footer) -->
+        <div id="cardFooter" 
+             class="control-box z-30 grid grid-cols-3 items-center px-3 text-[9px] font-bold text-slate-600 border-t border-slate-200 bg-white rounded-b-xl shadow-sm" 
+             style="left: -1px; bottom: -6px; width: 382px; height: 35px;" 
+             data-name="ফুটার সেকশন">
+            <span class="flex items-center gap-0.5 justify-start truncate"><i class="fa-solid fa-globe text-[#780000]"></i> nagad.com.bd</span>
+            <span class="flex items-center gap-0.5 justify-center text-center truncate"><i class="fa-solid fa-headset text-[#780000]"></i>১৬১৬৭</span>
+            <span class="flex items-center gap-0.5 justify-end text-right truncate"><i class="fa-solid fa-phone text-[#780000]"></i>০৯৬ ০৯৬ ১৬১৬৭</span>
+        </div>
+
+    </div>
+
+    <!-- পাশাপাশি দুটি বাটন (প্রিন্টে দেখাবে না) -->
+    <div class="no-print flex items-center gap-4 mt-6">
+        <button onclick="window.location.href='index.html'" class="flex items-center gap-2 bg-slate-700 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-xl shadow transition-all cursor-pointer">
+            <i class="fa-solid fa-pen-to-square"></i> এডিট করুন
+        </button>
+        <button onclick="clearAllData()" class="flex items-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-medium px-5 py-2.5 rounded-xl shadow transition-all cursor-pointer">
+    <i class="fa-solid fa-trash-can"></i> সব ডাটা মুছে ফেলুন
+</button>
+        <button onclick="window.print()" class="flex items-center gap-2 bg-[#780000] hover:bg-[#600000] text-white font-medium px-5 py-2.5 rounded-xl shadow transition-all cursor-pointer">
+            <i class="fa-solid fa-print"></i> প্রিন্ট করুন
+        </button>
+    </div>
+    <!-- ডাইনামিক ডেটা হ্যান্ডলিং স্ক্রিপ্ট -->
+    <!-- আগের <script>...</script> ট্যাগটি সম্পূর্ণ মুছে দিয়ে এই কোডটি বসিয়ে দিন -->
+    <script>
+        
+        function clearAllData() {
+    if (confirm('আপনি কি সব ডাটা মুছে ফেলতে চান??')) {
+        // LocalStorage theke data delete korbe
+        localStorage.removeItem('storeData');
+        
+        // Page reload ba input field/display clear korar jonno
+        location.reload(); 
+    }
+}
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = JSON.parse(localStorage.getItem('storeData'));
+            const qrImg = document.getElementById('qrCodeImg');
+            const digitsContainer = document.getElementById('cashoutDigitsContainer');
+            
+            if (savedData) {
+                // ১. কিউআর কোড এবং ডিজিট বক্স
+                if (savedData.cashout && savedData.cashout.trim() !== "") {
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(savedData.cashout)}`;
+                    
+                    digitsContainer.innerHTML = "";
+                    const cleanNum = savedData.cashout.replace(/\D/g, ''); // শুধু সংখ্যাগুলো রাখবে
+                    const digits = cleanNum.split('');
+                    
+                    digits.forEach((digit, index) => {
+                        const box = document.createElement('div');
+                        box.className = "w-6 h-8 bg-[#780000] text-white font-bold text-xl rounded flex items-center justify-center shadow-sm";
+                        box.innerText = digit;
+                        digitsContainer.appendChild(box);
+
+                        // ৩য় ও ৭ম ঘরের পরে হাইফেন (-) যোগ করা
+                        if (index === 2 || index === 6) {
+                            if (digits.length > index + 1) {
+                                const dash = document.createElement('span');
+                                dash.className = "text-[#780000] font-bold text-sm px-0.1";
+                                dash.innerText = "-";
+                                digitsContainer.appendChild(dash);
+                            }
+                        }
+                    });
+                } else {
+                    qrImg.src = "";
+                    digitsContainer.innerHTML = "<span class='text-xs text-rose-600 font-semibold'>নম্বর পাওয়া যায়নি</span>";
+                }
+
+                // ২. উদ্যোক্তার তথ্য বসানো
+                if(document.getElementById('displayOwnerName')) document.getElementById('displayOwnerName').innerText = savedData.ownerName || '-';
+                if(document.getElementById('displayStoreName')) document.getElementById('displayStoreName').innerText = savedData.name || '-';
+                if(document.getElementById('displayStoreAddress')) document.getElementById('displayStoreAddress').innerText = savedData.address || '-';
+                if(document.getElementById('displayStoreId')) document.getElementById('displayStoreId').innerText = savedData.id || '-';
+
+                // ৩. প্রোফাইল ছবি
+const displayProfileImg = document.getElementById('displayProfileImg');
+const profileContainer = document.getElementById('profileContainer');
+
+if (savedData.profileImg && savedData.profileImg.trim() !== "") {
+    displayProfileImg.src = savedData.profileImg;
+    profileContainer.classList.remove('hidden');
+} else {
+    profileContainer.classList.add('hidden');
+}
+            } else {
+                qrImg.src = "";
+                digitsContainer.innerHTML = "<span class='text-xs text-slate-400'>তথ্য ফাঁকা আছে</span>";
+            }
+        });
+    </script>
+</body>
+</html>
